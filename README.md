@@ -28,7 +28,7 @@ SVGs and PNGs using
 [pdf2svg](http://www.cityinthesky.co.uk/pdf2svg.html) and
 [convert](http://www.imagemagick.org/script/convert.php), respectively.
 
-### Building from Source###
+### Building from Source
 
 First, the following must be installed:
 
@@ -56,7 +56,7 @@ Italian translation &copy; 2012, [Daniel Londero](mailto:daniel.londero@gmail.co
 German translation &copy; 2013, [Martin Funk](mailto:mafulafunk@gmail.com), &copy; 2017, [Mirko Westermeier](mailto:mirko@westermeier.de).
 Vietnamese translation &copy; 2013, [Hoat Le](https://github.com/hoatle).
 Slovak translation &copy; 2013, [Ľudovít Lučenič](https://github.com/llucenic).
-Portuguese translation &copy; 2014, [Gustavo de Oliveira](mailto:goliveira5d@gmail.com).
+Portuguese translation &copy; 2014, [Gustavo de Oliveira](https://github.com/goliveira).
 Traditional Chinese translation &copy; 2015, [Peter Dave Hello](https://github.com/PeterDaveHello).
 Polish translation &copy; 2017, [Emil Wypych](mailto:wypychemil@gmail.com).
 
