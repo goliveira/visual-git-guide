@@ -17,10 +17,10 @@ a domain-specific language to represent commit graphs, and I think the result
 turned out quite well.
 
 All of the common macros are stored in
-[common.tex](http://github.com/MarkLodato/visual-git-guide/blob/master/common.tex).
+[common.tex](http://github.com/MarkLodato/visual-git-guide/blob/main/common.tex).
 Each image source includes this file.  To see an example of how to use these
 macros, look at
-[commit-master.tex](http://github.com/MarkLodato/visual-git-guide/blob/master/commit-master.tex).
+[commit-main.tex](http://github.com/MarkLodato/visual-git-guide/blob/main/commit-main.tex).
 
 To generate the image files, I first create PDFs using
 [pdflatex](http://www.tug.org/applications/pdftex/), and from there I create
@@ -32,15 +32,17 @@ SVGs and PNGs using
 
 First, the following must be installed:
 
-    sudo apt-get install texlive texlive-fonts-extra pdf2svg imagemagick
+    sudo apt-get install make texlive-base texlive-fonts-extra pdf2svg imagemagick ghostscript
 
 Then, build the images:
 
     make
 
-Finally, create the gh-pages branch:
+The result is in the `./build` directory.
 
-    make gh-pages
+### Pushing to gh-pages
+
+Done via GitHubActions (`.github/workflows/publish.yaml`).
 
 License
 -------
