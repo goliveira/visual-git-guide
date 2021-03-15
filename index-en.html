@@ -19,10 +19,13 @@
       <li><a href='index-it.html'>Italiano</a></li>
       <li><a href='index-ja.html'>日本語</a></li>
       <li><a href='index-ko.html'>한국어</a></li>
+      <li><a href='index-pl.html'>Polski</a></li>
+      <li><a href='index-pt.html'>Português</a></li>
       <li><a href='index-ru.html'>Русский</a></li>
       <li><a href='index-sk.html'>Slovenčina</a></li>
       <li><a href='index-vi.html'>Tiếng Việt</a></li>
       <li><a href='index-zh-cn.html'>简体中文</a></li>
+      <li><a href='index-zh-tw.html'>正體中文</a></li>
     </ul>
   </div>
 
@@ -37,6 +40,10 @@
   your understanding.  If you're interested in how this site was created, see
   my <a href='http://github.com/MarkLodato/visual-git-guide'>GitHub
     repository</a>.</p>
+
+  <p id="link-to-d3">Also recommended: <a
+      href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a></p>
 
   <h2 id="contents">Contents</h2>
   <ol>
@@ -55,6 +62,8 @@
       </ol>
     </li>
     <li><a href="#technical-notes">Technical Notes</a></li>
+    <li><a href="#appendix-stage">Walkthrough: Watching the effect of
+        commands</a></li>
   </ol>
 
   <h2 id="basic-usage">Basic Usage</h2>
@@ -120,8 +129,8 @@
   commits.  The current branch is identified by the special reference
   <em>HEAD</em>, which is "attached" to that branch.  In this image, the five
   latest commits are shown, with <em>ed489</em> being the most recent.
-  <em>master</em> (the current branch) points to this commit, while
-  <em>maint</em> (another branch) points to an ancestor of <em>master</em>'s
+  <em>main</em> (the current branch) points to this commit, while
+  <em>stable</em> (another branch) points to an ancestor of <em>main</em>'s
   commit.</p>
 
   <h2 id="commands-in-detail">Commands in Detail</h2>
@@ -139,21 +148,21 @@
   <p>When you commit, git creates a new commit object using the files from the
   stage and sets the parent to the current commit.  It then points the current
   branch to this new commit.  In the image below, the current branch is
-  <em>master</em>.   Before the command was run, <em>master</em> pointed to
+  <em>main</em>.   Before the command was run, <em>main</em> pointed to
   <em>ed489</em>.  Afterward, a new commit, <em>f0cec</em>, was created, with
-  parent <em>ed489</em>, and then <em>master</em> was moved to the new
+  parent <em>ed489</em>, and then <em>main</em> was moved to the new
   commit.</p>
 
-  <div class="center"><img src='commit-master.svg.png'></div>
+  <div class="center"><img src='commit-main.svg.png'></div>
 
   <p>This same process happens even when the current branch is an ancestor of
-  another.  Below, a commit occurs on branch <em>maint</em>, which was an
-  ancestor of <em>master</em>, resulting in <em>1800b</em>.  Afterward,
-  <em>maint</em> is no longer an ancestor of <em>master</em>.  To join the two
+  another.  Below, a commit occurs on branch <em>stable</em>, which was an
+  ancestor of <em>main</em>, resulting in <em>1800b</em>.  Afterward,
+  <em>stable</em> is no longer an ancestor of <em>main</em>.  To join the two
   histories, a <a href='#merge'>merge</a> (or <a href='#rebase'>rebase</a>)
   will be necessary.</p>
 
-  <div class="center"><img src='commit-maint.svg.png'></div>
+  <div class="center"><img src='commit-stable.svg.png'></div>
 
   <p>Sometimes a mistake is made in a commit, but this is easy to correct with
   <code>git commit --amend</code>.  When you use this command, git creates a
@@ -192,11 +201,11 @@
 
   <p>When a filename is <em>not</em> given and the reference is <em>not</em> a
   (local) branch &mdash; say, it is a tag, a remote branch, a SHA-1 ID, or
-  something like <em>master~3</em> &mdash; we get an anonymous branch, called
+  something like <em>main~3</em> &mdash; we get an anonymous branch, called
   a <em>detached HEAD</em>.  This is useful for jumping around the history.
   Say you want to compile version 1.6.6.1 of git.  You can <code>git checkout
     v1.6.6.1</code> (which is a tag, not a branch), compile, install, and then
-  switch back to another branch, say <code>git checkout master</code>.
+  switch back to another branch, say <code>git checkout main</code>.
   However, committing works slightly differently with a detached HEAD; this is
   covered <a href="#detached">below</a>.</p>
 
@@ -209,7 +218,7 @@
 
   <div class="center"><img src='commit-detached.svg.png'></div>
 
-  <p>Once you check out something else, say <em>master</em>, the commit is
+  <p>Once you check out something else, say <em>main</em>, the commit is
   (presumably) no longer referenced by anything else, and gets lost.  Note
   that after the command, there is nothing referencing <em>2eecb</em>.</p>
 
@@ -290,13 +299,13 @@
   <div class="center"><img src='rebase.svg.png'></div>
 
   <p>The above command takes all the commits that exist in <em>topic</em> but
-  not in <em>master</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
-  them onto <em>master</em>, and then moves the branch head to the new tip.
+  not in <em>main</em> (namely <em>169a6</em> and <em>2c33a</em>), replays
+  them onto <em>main</em>, and then moves the branch head to the new tip.
   Note that the old commits will be garbage collected if they are no longer
   referenced.</p>
 
   <p>To limit how far back to go, use the <code>--onto</code> option.  The
-  following command replays onto <em>master</em> the most recent commits on
+  following command replays onto <em>main</em> the most recent commits on
   the current branch since <em>169a6</em> (exclusive), namely
   <em>2c33a</em>.</p>
 
@@ -329,6 +338,137 @@
   to commits discarded with <code>git commit --amend</code> or <code>git
     rebase</code>.</p>
 
+  <h2 id="appendix-stage">Walkthrough: Watching the effect of commands</h2>
+
+  <p>The following walks you through changes to a repository so you can see the
+    effect of the command in real time, similar to how <a
+      href="http://onlywei.github.io/explain-git-with-d3/#">Visualizing Git
+      Concepts with D3</a> simulates them visually. Hopefully you find this
+    useful.</p>
+
+  <p>Start by creating some repository:</p>
+
+  <pre><code>$ <strong>git init foo</strong>
+$ <strong>cd foo</strong>
+$ <strong>echo 1 &gt; myfile</strong>
+$ <strong>git add myfile</strong>
+$ <strong>git commit -m "version 1"</strong>
+</code></pre>
+
+  <p>Now, define the following functions to help us show information:</p>
+
+  <pre><code>show_status() {
+  echo "HEAD:     $(git cat-file -p HEAD:myfile)"
+  echo "Stage:    $(git cat-file -p :myfile)"
+  echo "Worktree: $(cat myfile)"
+}
+
+initial_setup() {
+  echo 3 &gt; myfile
+  git add myfile
+  echo 4 &gt; myfile
+  show_status
+}
+</code></pre>
+
+  <p>Initially, everything is at version 1.</p>
+
+  <pre><code>$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 1
+</code></pre>
+
+  <p>We can watch the state change as we add and commit.</p>
+
+  <pre><code>$ <strong>echo 2 &gt; myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    1
+Worktree: 2
+$ <strong>git add myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     1
+Stage:    2
+Worktree: 2
+$ <strong>git commit -m "version 2"</strong>
+[main 4156116] version 2
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p>Now, let's create an initial state where the three are all different.</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+</code></pre>
+
+  <p>Let's watch what each command does.  You will see that they match the
+    diagrams above.</p>
+
+  <p><code>git reset -- myfile</code> copies from HEAD to stage:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git reset -- myfile</strong>
+Unstaged changes after reset:
+M   myfile
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 4
+</code></pre>
+
+  <p><code>git checkout -- myfile</code> copies from stage to worktree:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    3
+Worktree: 3
+</code></pre>
+
+  <p><code>git checkout HEAD -- myfile</code> copies from HEAD to both stage and
+    worktree:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git checkout HEAD -- myfile</strong>
+$ <strong>show_status</strong>
+HEAD:     2
+Stage:    2
+Worktree: 2
+</code></pre>
+
+  <p><code>git commit myfile</code> copies from worktree to both stage and
+    HEAD:</p>
+
+  <pre><code>$ <strong>initial_setup</strong>
+HEAD:     2
+Stage:    3
+Worktree: 4
+$ <strong>git commit myfile -m "version 4"</strong>
+[main 679ff51] version 4
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+$ <strong>show_status</strong>
+HEAD:     4
+Stage:    4
+Worktree: 4
+</code></pre>
+
   <hr>
 
   <p>Copyright &copy; 2010,
@@ -351,13 +491,19 @@
     <a href="mailto:mafulafunk@gmail.com">Martin Funk</a>.
   Slovak translation &copy; 2013,
     <a href='https://github.com/llucenic'>Ľudovít Lučenič</a>.
+  Portuguese translation &copy; 2014,
+    <a href='mailto:goliveira5d@gmail.com'>Gustavo de Oliveira</a>.
+  Traditional Chinese translation &copy; 2015,
+    <a href='https://github.com/PeterDaveHello'>Peter Dave Hello</a>.
+  Polish translation &copy; 2017,
+    <a href="mailto:wypychemil@gmail.com">Emil Wypych</a>.
   </p>
 
   <p><a rel="license"
-    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt=""
-    src="http://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>
+    href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt=""
+    src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png"></a>
   This work is licensed under a <a rel="license"
-    href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
+    href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative
     Commons Attribution-Noncommercial-Share Alike 3.0 United States
     License</a>.</p>
 
